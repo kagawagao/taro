@@ -124,6 +124,7 @@ export default class TaroMiniPlugin {
   themeLocation: string
   pageLoaderName = '@tarojs/taro-loader/lib/page'
   independentPackages = new Map<string, string[]>()
+  pluginExportEntries = new Map<string, string>()
 
   constructor (options = {} as ITaroMiniPluginOptions) {
     this.options = Object.assign({
@@ -458,6 +459,7 @@ export default class TaroMiniPlugin {
       this.getConfigFiles(compiler)
     } else {
       this.appConfig = this.getAppConfig()
+      this.getAppPluginEntries()
       this.getPages()
       this.getPagesConfig()
       this.getDarkMode()
@@ -601,6 +603,21 @@ export default class TaroMiniPlugin {
       throw new Error('缺少 app 全局配置文件，请检查！')
     }
     return appConfig as AppConfig
+  }
+
+  /**
+   * 获取 app 中的插件导出
+   */
+  getAppPluginEntries () {
+    const { plugins = {} } = this.appConfig
+    // 查找 app 的插件导出
+    Object.values(plugins).forEach((plugin) => {
+      if (plugin.export) {
+        const filePath = path.join(this.options.sourceDir, plugin.export)
+        const fileName = path.basename(filePath).replace(path.extname(filePath), '')
+        this.pluginExportEntries.set(fileName, filePath)
+      }
+    })
   }
 
   /**
@@ -755,6 +772,9 @@ export default class TaroMiniPlugin {
         this.addEntry(item.path, item.name, META_TYPE.COMPONENT)
       }
     })
+    this.pluginExportEntries.forEach((filePath, entryName) => {
+      this.addEntry(filePath, entryName, META_TYPE.EXPORTS)
+    })
   }
 
   replaceExt (file: string, ext: string) {
@@ -853,8 +873,8 @@ export default class TaroMiniPlugin {
     const { frameworkExts } = this.options
     if (subPackages && subPackages.length) {
       subPackages.forEach(item => {
+        const root = item.root
         if (item.pages && item.pages.length) {
-          const root = item.root
           const isIndependent = !!item.independent
           if (isIndependent) {
             this.independentPackages.set(root, [])
@@ -883,6 +903,16 @@ export default class TaroMiniPlugin {
                 stylePath: isNative ? this.getStylePath(pagePath) : undefined,
                 templatePath: isNative ? this.getTemplatePath(pagePath) : undefined
               })
+            }
+          })
+        }
+        // 处理子包中的插件导出
+        if (item.plugins) {
+          Object.values(item.plugins).forEach((plugin) => {
+            if (plugin.export) {
+              const filePath = path.join(this.options.sourceDir, root, plugin.export)
+              const fileName = path.basename(filePath).replace(path.extname(filePath), '')
+              this.pluginExportEntries.set(`${root}/${fileName}`, filePath)
             }
           })
         }

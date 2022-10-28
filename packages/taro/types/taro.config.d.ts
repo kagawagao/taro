@@ -326,6 +326,7 @@ declare module './index' {
     [key: string]: {
       version: string
       provider: string
+      export?: string
     }
   }
 
