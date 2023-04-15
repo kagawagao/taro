@@ -42,13 +42,13 @@ interface TextareaProps extends StandardProps, FormItemProps {
 
   /** 获取焦点
    * @default false
-   * @supported weapp, alipay, swan, tt, qq, rn
+   * @supported weapp, alipay, swan, tt, qq, h5, rn
    */
   focus?: boolean
 
   /** 是否自动增高，设置 autoHeight 时，style.height不生效
    * @default false
-   * @supported weapp, alipay, swan, tt, qq, rn
+   * @supported weapp, alipay, swan, tt, qq, h5, rn
    */
   autoHeight?: boolean
 
@@ -218,7 +218,7 @@ declare namespace TextareaProps {
 
 /** 多行输入框。该组件是原生组件，使用时请注意相关限制
  * @classification forms
- * @supported weapp, h5, rn
+ * @supported weapp, alipay, swan, tt, qq, jd, h5, rn, harmony
  * @example_react
  * ```tsx
  * export default class PageView extends Component {

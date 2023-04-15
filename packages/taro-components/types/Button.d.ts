@@ -128,6 +128,7 @@ interface ButtonProps extends StandardProps {
   /** 显示会话内消息卡片
    *
    * 生效时机：`open-type="contact"`
+   * @supported weapp
    * @default false
    */
   showMessageCard?: boolean
@@ -444,8 +445,13 @@ declare namespace ButtonProps {
       /** 昵称 */
       nickName: string
 
-      /** 头像 */
+      /** 头像链接 */
       avatarUrl: string
+
+      /** 头像
+       * @supported alipay
+       */
+      avatar: string
 
       /** 性别 */
       gender: keyof Gender
@@ -514,6 +520,12 @@ declare namespace ButtonProps {
      * @see https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/share.html#%E4%BD%BF%E7%94%A8%E6%8C%87%E5%BC%95
      */
     code?: string
+
+    /**
+     * 签名信息，如果在开放平台后台配置了加签方式后有此字段
+     * @supported alipay
+     */
+    sign: string
   }
   interface onOpenSettingEventDetail {
     /* 打开授权设置页的调用状态 */
@@ -526,7 +538,7 @@ declare namespace ButtonProps {
 
 /** 按钮
  * @classification forms
- * @supported weapp, h5, rn, tt
+ * @supported weapp, alipay, swan, tt, qq, jd, h5, rn, harmony
  * @example_react
  * ```tsx
  * export default class PageButton extends Component {

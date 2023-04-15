@@ -9,7 +9,7 @@ interface SwitchProps extends StandardProps, FormItemProps {
 
   /** 是否禁用
    * @default false
-   * @supported weapp, alipay, swan, tt, qq, rn
+   * @supported weapp, alipay, swan, tt, qq, h5, rn
    */
   disabled?: boolean
 
@@ -47,7 +47,7 @@ interface SwitchProps extends StandardProps, FormItemProps {
   ariaLabel?: string
 
   /** checked 改变时触发 change 事件
-   * @supported weapp, alipay, swan, tt, qq, jd, rn
+   * @supported weapp, alipay, swan, tt, qq, jd, h5, rn
    */
   onChange?: CommonEventFunction<SwitchProps.onChangeEventDetail>
 }
@@ -93,7 +93,7 @@ declare namespace SwitchProps {
  *   </view>
  * </template>
  * ```
- * @supported weapp, h5, rn, swan, alipay, tt
+ * @supported weapp, alipay, swan, tt, qq, jd, h5, rn, harmony
  * @see https://developers.weixin.qq.com/miniprogram/dev/component/switch.html
  */
 declare const Switch: ComponentType<SwitchProps>

@@ -101,7 +101,7 @@ interface LivePlayerProps extends StandardProps {
    * @supported weapp
    * @default false
    */
-  enableAutoRotation?: string
+  enableAutoRotation?: boolean
 
   /** 播放状态变化事件，detail = {code}
    * @supported weapp, swan, tt, qq, jd
@@ -271,7 +271,7 @@ declare namespace LivePlayerProps {
  *
  * 需要先通过类目审核，再在小程序管理后台，“设置”-“接口设置”中自助开通该组件权限。
  * @classification media
- * @supported weapp, tt
+ * @supported weapp, swan, tt, qq, jd
  * @example_react
  * ```tsx
  * class App extends Components {

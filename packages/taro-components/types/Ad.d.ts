@@ -34,6 +34,8 @@ interface AdProps extends StandardProps {
   /** 广告类型：banner、feed ，需和百青藤平台上的代码位类型相匹配
    * @supported swan, tt, qq
    * @default feed
+   * @swan 支持 banner、feed
+   * @qq 支持 banner、card、feeds、block
    */
   type?: string
 
@@ -199,7 +201,7 @@ declare namespace AdProps {
 
 /** Banner 广告
  * @classification open
- * @supported weapp, tt
+ * @supported weapp, swan, tt, qq
  * @example_react
  * ```tsx
  * class App extends Component {
