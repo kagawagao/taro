@@ -27,10 +27,15 @@ export default (ctx: IPluginContext) => {
     let distProjectConfig = origProjectConfig
     if (origProjectConfig.compileType !== 'plugin') {
       distProjectConfig = Object.assign({}, origProjectConfig, { miniprogramRoot: './' })
+    } else {
+      distProjectConfig = Object.assign({}, origProjectConfig, {
+        miniprogramRoot: './miniprogram/',
+        pluginRoot: './plugin/',
+      })
     }
     ctx.writeFileToDist({
       filePath: distConfigName,
-      content: JSON.stringify(distProjectConfig, null, 2)
+      content: JSON.stringify(distProjectConfig, null, 2),
     })
 
     if (ctx.initialConfig.logger?.quiet === false) {
